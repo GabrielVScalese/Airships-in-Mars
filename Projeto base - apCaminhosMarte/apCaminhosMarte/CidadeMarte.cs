@@ -35,7 +35,7 @@ namespace apCaminhosMarte
             get => id;
             set
             {
-                if (id < 0)
+                if (value < 0)
                     throw new Exception("Id invalido");
 
                 id = value;
@@ -48,7 +48,7 @@ namespace apCaminhosMarte
             get => nomeCidade;
             set
             {
-                if (nomeCidade == null || nomeCidade.Equals(""))
+                if (value == null || value.Equals(""))
                     throw new Exception("Nome de cidade invalido");
 
                 nomeCidade = value;
@@ -79,6 +79,11 @@ namespace apCaminhosMarte
         public int CompareTo (CidadeMarte cm)
         {
             return id.CompareTo(cm.id);
+        }
+
+        public override string ToString()
+        {
+            return "Id: " + id + " | N.Cidade: " + nomeCidade + " | X: " + x + " | Y: " + y + " |";
         }
     }
 }

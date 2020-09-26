@@ -12,6 +12,7 @@ namespace apCaminhosMarte
 {
     public partial class Form1 : Form
     {
+        private ArvoreCidades arvoreCidades;
         public Form1()
         {
             InitializeComponent();
@@ -25,6 +26,20 @@ namespace apCaminhosMarte
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Buscar caminhos entre cidades selecionadas");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            arvoreCidades = new ArvoreCidades();
+            arvoreCidades.ConstruirArvore(@"C:\Users\gabri\Downloads\CidadesMarte.txt");
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            lsbCidades.Items.Clear();
+            string[] cidadesMarte = arvoreCidades.ToString().Split(',');
+            for (int i = 0; i < cidadesMarte.Length; i++)
+                lsbCidades.Items.Add("\n" + cidadesMarte[i]);
         }
     }
 }

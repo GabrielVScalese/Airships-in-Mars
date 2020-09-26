@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace apCaminhosMarte
@@ -102,21 +103,29 @@ namespace apCaminhosMarte
             }
         }
 
-        // Método provisório
+        /*// Método provisório
         public void ExibirArvoreBinaria()
         {
             Percorrer(raiz);
-        }
+        }*/
 
         // Método provisório
-        private void Percorrer(NoArvore<Dado> atual)
+        private void Percorrer(NoArvore<Dado> atual, ref string ret)
         {
             if (atual != null)
             {
-                Console.WriteLine(atual.Info);
-                Percorrer(atual.Esq);
-                Percorrer(atual.Dir);
+                //Console.WriteLine(atual.Info);
+                ret += atual.Info.ToString() + ", ";
+                Percorrer(atual.Esq, ref ret);
+                Percorrer(atual.Dir, ref ret);
             }
+        }
+
+        public override string ToString ()
+        {
+            string ret = "";
+            Percorrer(raiz, ref ret);
+            return ret;
         }
     }
 }
