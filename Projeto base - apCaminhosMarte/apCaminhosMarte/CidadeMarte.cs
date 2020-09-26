@@ -9,7 +9,7 @@ namespace apCaminhosMarte
 {
     // Nome: Gabriel Villar Scalese    RA: 19171
     // Nome: Nícolas Maisonette Duarte RA: 19192
-    class CidadeMarte
+    class CidadeMarte : IComparable<CidadeMarte>
     {
         // Atributo que representa o id da cidade
         private int id;
@@ -73,6 +73,12 @@ namespace apCaminhosMarte
             {
                 y = value;
             }
+        }
+
+        // Método de comparação de informações entre dois objetos da classe
+        public int CompareTo (CidadeMarte cm)
+        {
+            return id.CompareTo(cm.id);
         }
     }
 }
