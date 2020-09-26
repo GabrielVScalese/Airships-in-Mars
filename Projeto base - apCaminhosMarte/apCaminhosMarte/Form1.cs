@@ -15,6 +15,7 @@ namespace apCaminhosMarte
     {
         private ArvoreCidades arvoreCidades;
         private GrafoBacktracking grafo;
+        private PilhaLista<PilhaLista<Movimento>> caminhos;
         public Form1()
         {
             InitializeComponent();
@@ -37,12 +38,13 @@ namespace apCaminhosMarte
                 return;
             }
 
- 
-            var caminhos = grafo.GerarCaminhos(idOrigem, idDestino);
+            caminhos = grafo.GerarCaminhos(idOrigem, idDestino);
             if (caminhos.GetQtd() == 0)
                 MessageBox.Show("Nenhum caminho foi encontrado!");
             else
-                MessageBox.Show(caminhos.GetQtd().ToString());
+                MessageBox.Show("Número de caminhos encontrados: " + caminhos.GetQtd().ToString());
+
+            ExibirCaminhos();
         }
 
         private int GetOrigem ()
@@ -65,6 +67,29 @@ namespace apCaminhosMarte
             int id = int.Parse(linhaSelecionada.Split('-')[0].Trim());
 
             return id;
+        }
+
+        private void ExibirCaminhos ()
+        {
+            dgvCaminhos.RowCount = caminhos.GetQtd();
+
+            var umCaminho = caminhos.Inicio;
+            for (int lin = 0; lin < caminhos.GetQtd(); lin++)
+            {
+                var umMovimento = umCaminho.Info.Inicio;
+                for (int col = 0; col < 6; col++)
+                {
+                    if (umMovimento == null)
+                        break;
+
+                    dgvCaminhos[col, lin].Value = umMovimento.Info.ToString();
+                    umMovimento = umMovimento.Prox;
+                }
+
+                umCaminho = umCaminho.Prox;
+            }
+
+            dgvCaminhos.Refresh();
         }
 
         private void Form1_Load(object sender, EventArgs e)
