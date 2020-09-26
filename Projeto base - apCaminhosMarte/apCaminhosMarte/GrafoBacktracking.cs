@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,5 +57,66 @@ namespace apCaminhosMarte
 
             arquivo.Close();
         }
+
+        public PilhaLista<Movimento> BuscarCaminho (int origem, int destino)
+        {
+            int cidadeAtual = origem;
+            int saidaAtual = 0;
+            bool[] passou = new bool[23];
+            PilhaLista<Movimento> pilhaLista = new PilhaLista<Movimento>();
+
+            for (; ; )
+            {
+                bool achouCidade = false;
+                var cidadeEncontrada = VerificarCidades(cidadeAtual, ref achouCidade);
+                if (achouCidade == true)
+                {
+                    pilhaLista.Empilhar(new Movimento(cidadeAtual, cidadeEncontrada.Destino, cidadeEncontrada.Lc));
+                    passou[cidadeAtual] = true;
+                    cidadeAtual = cidadeEncontrada.Destino;
+                    
+                    if (cidadeAtual == destino)
+                        break;
+                }
+                else
+                {
+                    passou[cidadeAtual] = true;
+                    var cidadeAnterior = pilhaLista.Desempilhar();
+                    cidadeAtual = cidadeAnterior.Origem;
+
+                    if (pilhaLista.IsVazia())
+                        break;
+                }
+            }
+
+            return pilhaLista;
+
+            Movimento VerificarCidades (int cdAtual, ref bool encontrou)
+            {
+                Movimento ret = null;
+                for (int j = 0; j < 23; j++)
+                    if (IsFree(cdAtual, j))
+                    {
+                        ret = new Movimento(cdAtual, j, matriz[cdAtual, j]);
+                        encontrou = true;
+                        break;
+                    }
+                        
+
+                return ret;
+            }
+
+            bool IsFree(int cdAtual, int sAtual)
+            {
+                bool ret = false;
+                if (matriz[cdAtual, sAtual] != null)
+                    if (passou[sAtual] != true)
+                        ret = true;
+
+                return ret;
+            }
+        }
+
+        
     }
 }

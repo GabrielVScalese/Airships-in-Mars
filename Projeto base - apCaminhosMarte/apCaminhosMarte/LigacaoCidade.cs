@@ -58,7 +58,7 @@ namespace apCaminhosMarte
 
         public override string ToString()
         {
-            return "| Distancia: " + distancia + " | Tempo: " + tempo + " | Custo: " + custo + " |"; 
+            return " Distancia: " + distancia + " | Tempo: " + tempo + " | Custo: " + custo + " |"; 
         }
     }
 }

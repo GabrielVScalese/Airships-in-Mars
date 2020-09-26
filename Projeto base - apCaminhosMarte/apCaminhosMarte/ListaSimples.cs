@@ -120,5 +120,22 @@ namespace apCaminhosMarte
 
             return ultimo.Info;
         }
+
+        public override string ToString()
+        {
+            String ret = "{ ";
+            No aux = primeiro;
+            while (aux != null)
+            {
+                if (aux.Prox == null)
+                    ret += aux.Info;
+                else
+                    ret += aux.Info + ", ";
+
+                aux = aux.Prox;
+            }
+
+            return ret + " }";
+        }
     }
 }

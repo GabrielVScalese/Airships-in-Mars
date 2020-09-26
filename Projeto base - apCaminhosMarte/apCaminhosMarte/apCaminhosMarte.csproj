@@ -57,7 +57,10 @@
     </Compile>
     <Compile Include="GrafoBacktracking.cs" />
     <Compile Include="LigacaoCidade.cs" />
+    <Compile Include="ListaSimples.cs" />
+    <Compile Include="Movimento.cs" />
     <Compile Include="NoArvore.cs" />
+    <Compile Include="PilhaLista.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
