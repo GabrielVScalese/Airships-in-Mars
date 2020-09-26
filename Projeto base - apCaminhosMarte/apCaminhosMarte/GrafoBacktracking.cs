@@ -12,16 +12,6 @@ namespace apCaminhosMarte
     {
         private LigacaoCidade[,] matriz;
         private string nomeArquivo;
-        private const int inicioOrigem = 0;
-        private const int tamanhoOrigem = 3;
-        private const int inicioDestino = inicioOrigem + tamanhoOrigem;
-        private const int tamanhoDestino = 3;
-        private const int inicioDistancia = inicioDestino + tamanhoDestino;
-        private const int tamanhoDistancia = 5;
-        private const int inicioTempo = inicioDistancia + tamanhoDistancia;
-        private const int tamanhoTempo = 4;
-        private const int inicioCusto = inicioTempo + tamanhoTempo;
-        private const int tamanhoCusto = 5;
 
         public GrafoBacktracking (string nomeArquivo)
         {
@@ -53,11 +43,11 @@ namespace apCaminhosMarte
             while (!arquivo.EndOfStream)
             {
                 string linha = arquivo.ReadLine();
-                int origem = int.Parse(linha.Substring(inicioOrigem, tamanhoOrigem));
-                int destino = int.Parse(linha.Substring(inicioDestino, tamanhoDestino));
-                int distancia = int.Parse(linha.Substring(inicioDistancia, tamanhoDistancia));
-                int tempo = int.Parse(linha.Substring(inicioTempo, tamanhoTempo));
-                int custo = int.Parse(linha.Substring(inicioCusto, tamanhoCusto));
+                int origem = int.Parse(linha.Substring(0, 3));
+                int destino = int.Parse(linha.Substring(3, 3));
+                int distancia = int.Parse(linha.Substring(6, 5));
+                int tempo = int.Parse(linha.Substring(11, 4));
+                int custo = int.Parse(linha.Substring(15, 5));
 
                 var ligacaoCidade = new LigacaoCidade(distancia, tempo, custo);
                 matriz[origem, destino] = ligacaoCidade;
