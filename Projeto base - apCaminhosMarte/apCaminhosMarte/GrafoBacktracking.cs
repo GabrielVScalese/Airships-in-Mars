@@ -58,12 +58,23 @@ namespace apCaminhosMarte
             arquivo.Close();
         }
 
-        public PilhaLista<Movimento> BuscarCaminho (int origem, int destino)
+        public PilhaLista<PilhaLista<Movimento>> GerarCaminhos (int origem, int destino)
+        {
+            int anterior = 0;
+            var pilhaLista = new PilhaLista<Movimento>();
+            var caminhos = new PilhaLista<PilhaLista<Movimento>>();
+            var anteriores = new PilhaLista<int>();
+            var passou = new bool[23];
+
+            return BuscarCaminhos(origem, destino, pilhaLista, passou, caminhos, anteriores);
+        }
+
+        private PilhaLista<PilhaLista<Movimento>> BuscarCaminhos (int origem, int destino, PilhaLista<Movimento> caminho, bool[] passouCidades, PilhaLista<PilhaLista<Movimento>> caminhos, PilhaLista<int> anteriores)
         {
             int cidadeAtual = origem;
-            int saidaAtual = 0;
-            bool[] passou = new bool[23];
-            PilhaLista<Movimento> pilhaLista = new PilhaLista<Movimento>();
+            bool[] passou = passouCidades;
+            PilhaLista<Movimento> pilhaLista = caminho;
+            PilhaLista<int> ant = anteriores;
 
             for (; ; )
             {
@@ -74,24 +85,34 @@ namespace apCaminhosMarte
                     pilhaLista.Empilhar(new Movimento(cidadeAtual, cidadeEncontrada.Destino, cidadeEncontrada.Lc));
                     passou[cidadeAtual] = true;
                     cidadeAtual = cidadeEncontrada.Destino;
-                    
+
                     if (cidadeAtual == destino)
-                        break;
+                    {
+                        PilhaLista<Movimento> caminhoClone = (PilhaLista<Movimento>)pilhaLista.Clone();
+                        caminhos.Empilhar(caminhoClone);
+                        var cidadeAnterior = pilhaLista.Desempilhar();
+                        cidadeAtual = cidadeAnterior.Origem;
+                        passou[cidadeAtual] = true;
+                        ant.Empilhar(destino);
+                        BuscarCaminhos (cidadeAtual, destino, pilhaLista, passou, caminhos, ant);
+                        return caminhos;
+                    }
                 }
                 else
                 {
-                    passou[cidadeAtual] = true;
-                    var cidadeAnterior = pilhaLista.Desempilhar();
-                    cidadeAtual = cidadeAnterior.Origem;
 
                     if (pilhaLista.IsVazia())
                         break;
+
+                    passou[cidadeAtual] = true;
+                    var cidadeAnterior = pilhaLista.Desempilhar();
+                    cidadeAtual = cidadeAnterior.Origem;
                 }
             }
 
-            return pilhaLista;
+            return caminhos;
 
-            Movimento VerificarCidades (int cdAtual, ref bool encontrou)
+            Movimento VerificarCidades(int cdAtual, ref bool encontrou)
             {
                 Movimento ret = null;
                 for (int j = 0; j < 23; j++)
@@ -101,7 +122,31 @@ namespace apCaminhosMarte
                         encontrou = true;
                         break;
                     }
-                        
+
+
+                return ret;
+            }
+
+            bool ExistsMovimento (int cdAtual, int sAtual)
+            {
+                bool ret = false;
+                No<PilhaLista<Movimento>> aux = caminhos.Inicio;
+                while (aux != null)
+                {
+                    if (matriz[cdAtual, sAtual] == null)
+                    {
+                        aux = aux.Prox;
+                        continue;
+                    }
+                       
+                    if (aux.Info.ExistsInfo(new Movimento(cdAtual, destino, matriz[cdAtual, sAtual])))
+                    {
+                        ret = true;
+                        break;
+                    }
+
+                    aux = aux.Prox;
+                }
 
                 return ret;
             }
@@ -109,14 +154,17 @@ namespace apCaminhosMarte
             bool IsFree(int cdAtual, int sAtual)
             {
                 bool ret = false;
+
+                if (ExistsMovimento(cdAtual, sAtual))
+                    return false;
+                
                 if (matriz[cdAtual, sAtual] != null)
                     if (passou[sAtual] != true)
                         ret = true;
-
+               
                 return ret;
             }
         }
-
         
     }
 }

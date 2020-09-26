@@ -1,54 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
 namespace apCaminhosMarte
 {
-    class ListaSimples<Dado> where Dado : IComparable<Dado>
+    class ListaSimples<Dado>
     {
-        private class No
-        {
-            private Dado info;
-            private No prox;
-
-            public No (Dado info, No prox)
-            {
-                Info = info;
-                Prox = prox;
-            }
-
-            public No (Dado info)
-            {
-                Info = info;
-            }
-
-            public Dado Info
-            {
-                get => info;
-                set
-                {
-                    info = value;
-                }
-            }
-
-            public No Prox
-            {
-                get => prox;
-                set
-                {
-                    prox = value;
-                }
-            }
-        }
-
-        private No primeiro, ultimo;
+        private No<Dado> primeiro, ultimo;
 
         public ListaSimples ()
         { }
 
+        public No<Dado> Primeiro
+        {
+            get => primeiro;
+        }
 
         public void InserirNoFim (Dado info)
         {
@@ -57,12 +28,12 @@ namespace apCaminhosMarte
 
             if (IsVazia())
             {
-                primeiro = new No(info, primeiro);
+                primeiro = new No<Dado>(info, primeiro);
                 ultimo = primeiro;
             }
             else
             {
-                No aux = new No(info, null);
+                No<Dado> aux = new No<Dado>(info, null);
                 ultimo.Prox = aux;
                 ultimo = aux;
             }
@@ -80,7 +51,7 @@ namespace apCaminhosMarte
             }
             else
             {
-                No aux = primeiro;
+                No<Dado> aux = primeiro;
                 while (aux != null)
                 {
                     if (aux.Prox.Equals(ultimo))
@@ -103,7 +74,7 @@ namespace apCaminhosMarte
         public int GetQtd ()
         {
             int qtd = 0;
-            No aux = primeiro;
+            No<Dado> aux = primeiro;
             while (aux != null)
             {
                 qtd++;
@@ -121,10 +92,28 @@ namespace apCaminhosMarte
             return ultimo.Info;
         }
 
+        public bool ExistsInfo (Dado info)
+        {
+            No<Dado> aux = primeiro;
+            bool ret = false;
+            while (aux != null)
+            {
+                if (aux.Info.Equals(info))
+                {
+                    ret = true;
+                    break;
+                }
+                    
+                aux = aux.Prox;
+            }
+
+            return ret;
+        }
+
         public override string ToString()
         {
-            String ret = "{ ";
-            No aux = primeiro;
+            string ret = "{ ";
+            No<Dado> aux = primeiro;
             while (aux != null)
             {
                 if (aux.Prox == null)
@@ -136,6 +125,33 @@ namespace apCaminhosMarte
             }
 
             return ret + " }";
+        }
+
+        public Object Clone ()
+        {
+            ListaSimples<Dado> ret = null;
+            try
+            {
+                ret = new ListaSimples<Dado>(this);
+            }
+            catch (Exception e)
+            { }
+
+            return ret;
+        }
+
+        public ListaSimples(ListaSimples<Dado> modelo)
+        {
+            if (modelo == null)
+                throw new Exception("Modelo ausente");
+
+            No<Dado> modeloAux = modelo.primeiro;
+            while (modeloAux != null)
+            {
+                InserirNoFim(modeloAux.Info);
+
+                modeloAux = modeloAux.Prox;
+            }
         }
     }
 }

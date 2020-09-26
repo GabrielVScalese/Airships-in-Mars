@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
-    class Movimento : IComparable<Movimento>
+    class Movimento
     {
         private int origem, destino;
         private LigacaoCidade lc;
@@ -53,7 +53,33 @@ namespace apCaminhosMarte
                 lc = value;
             }
         }
-        
+            
+        public override bool Equals (Object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (this == obj)
+                return true;
+
+            if (!GetType().Equals(obj.GetType()))
+                return false;
+
+            Movimento mov = (Movimento)obj;
+
+            if (origem != mov.Origem)
+                return false;
+
+            if (destino != mov.Destino)
+                return false;
+
+            if (!lc.Equals(mov.Lc))
+                return false;
+
+            return true;
+        }
+
+
         public int CompareTo (Movimento m)
         {
             return origem.CompareTo(m.origem);

@@ -56,6 +56,31 @@ namespace apCaminhosMarte
 ;            }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (this == obj)
+                return true;
+
+            if (!GetType().Equals(obj.GetType()))
+                return false;
+
+            LigacaoCidade lc = (LigacaoCidade) obj;
+
+            if (distancia != lc.distancia)
+                return false;
+
+            if (tempo != lc.Tempo)
+                return false;
+
+            if (custo != lc.Custo)
+                return false;
+
+            return true;
+        }
+
         public override string ToString()
         {
             return " Distancia: " + distancia + " | Tempo: " + tempo + " | Custo: " + custo + " |"; 

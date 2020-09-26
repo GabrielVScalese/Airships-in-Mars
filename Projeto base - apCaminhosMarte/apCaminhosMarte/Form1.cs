@@ -36,9 +36,13 @@ namespace apCaminhosMarte
                 MessageBox.Show("Cidades inválidas");
                 return;
             }
-                
-            var caminho = grafo.BuscarCaminho(idOrigem, idDestino);
-            MessageBox.Show(caminho.ToString());
+
+ 
+            var caminhos = grafo.GerarCaminhos(idOrigem, idDestino);
+            if (caminhos.GetQtd() == 0)
+                MessageBox.Show("Nenhum caminho foi encontrado!");
+            else
+                MessageBox.Show(caminhos.GetQtd().ToString());
         }
 
         private int GetOrigem ()

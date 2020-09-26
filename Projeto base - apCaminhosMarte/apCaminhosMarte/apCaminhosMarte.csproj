@@ -59,6 +59,7 @@
     <Compile Include="LigacaoCidade.cs" />
     <Compile Include="ListaSimples.cs" />
     <Compile Include="Movimento.cs" />
+    <Compile Include="No.cs" />
     <Compile Include="NoArvore.cs" />
     <Compile Include="PilhaLista.cs" />
     <Compile Include="Program.cs" />
