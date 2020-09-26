@@ -9,43 +9,15 @@ namespace apCaminhosMarte
 {
     class LigacaoCidade
     {
-        private int origem;
-        private int destino;
         private int distancia;
         private int tempo;
         private int custo;
 
-        public LigacaoCidade (int origem, int destino, int distancia, int tempo, int custo)
+        public LigacaoCidade (int distancia, int tempo, int custo)
         {
-            Origem = origem;
-            Destino = destino;
             Distancia = distancia;
             Tempo = tempo;
             Custo = custo;
-        }
-
-        public int Origem
-        {
-            get => origem;
-            set
-            {
-                if (value < 0)
-                    throw new Exception ("Origem invalida");
-
-                origem = value;
-            }
-        }
-
-        public int Destino
-        {
-            get => destino;
-            set
-            {
-                if (value < 0)
-                    throw new Exception ("Destino invalido");
-
-                destino = value;
-            }
         }
 
         public int Distancia
@@ -86,7 +58,7 @@ namespace apCaminhosMarte
 
         public override string ToString()
         {
-            return "| Origem: " + origem + " | Destino: " + destino + " | Distancia: " + distancia + " | Tempo: " + tempo + " | Custo: " + custo + " |"; 
+            return "| Distancia: " + distancia + " | Tempo: " + tempo + " | Custo: " + custo + " |"; 
         }
     }
 }

@@ -59,7 +59,7 @@ namespace apCaminhosMarte
                 int tempo = int.Parse(linha.Substring(inicioTempo, tamanhoTempo));
                 int custo = int.Parse(linha.Substring(inicioCusto, tamanhoCusto));
 
-                var ligacaoCidade = new LigacaoCidade(origem, destino, distancia, tempo, custo);
+                var ligacaoCidade = new LigacaoCidade(distancia, tempo, custo);
                 matriz[origem, destino] = ligacaoCidade;
             }
 
