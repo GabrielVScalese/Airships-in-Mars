@@ -66,9 +66,16 @@ namespace apCaminhosMarte
             else
             {
                 if (atual.Info.CompareTo(info) > 0)
+                {
+                    antecessor = raiz;
                     PercorrerParaInserir(info, atual.Esq);
+                }
                 else
+                {
+                    antecessor = raiz;
                     PercorrerParaInserir(info, atual.Dir);
+                }
+                    
             }
         }
 

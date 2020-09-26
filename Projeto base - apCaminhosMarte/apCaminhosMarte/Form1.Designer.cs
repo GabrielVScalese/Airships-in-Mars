@@ -334,10 +334,12 @@
             // 
             // lsbCidades
             // 
+            this.lsbCidades.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lsbCidades.FormattingEnabled = true;
+            this.lsbCidades.ItemHeight = 25;
             this.lsbCidades.Location = new System.Drawing.Point(6, 6);
             this.lsbCidades.Name = "lsbCidades";
-            this.lsbCidades.Size = new System.Drawing.Size(1305, 511);
+            this.lsbCidades.Size = new System.Drawing.Size(1305, 504);
             this.lsbCidades.TabIndex = 0;
             // 
             // Form1

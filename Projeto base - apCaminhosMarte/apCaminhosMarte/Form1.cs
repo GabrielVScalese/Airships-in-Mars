@@ -41,14 +41,10 @@ namespace apCaminhosMarte
             lsbCidades.Items.Clear();
             string[] cidadesMarte = arvoreCidades.ToString().Split(',');
             for (int i = 0; i < cidadesMarte.Length; i++)
-                lsbCidades.Items.Add("\n" + cidadesMarte[i]);
-
-            lsbCidades.Items.Add("\n");
-            LigacaoCidade[,] aux = grafo.Matriz;
-            for (int i = 0; i < 22; i++)
-                for (int j = 0; j < 23; j++)
-                    if (aux[i, j] != null)
-                        lsbCidades.Items.Add(aux[i, j]);
+                if (i == 0)
+                    lsbCidades.Items.Add(" " + cidadesMarte[i]);
+                else
+                    lsbCidades.Items.Add("\n" + cidadesMarte[i]);
         }
     }
 }
