@@ -9,18 +9,24 @@ using System.Windows.Forms.VisualStyles;
 
 namespace apCaminhosMarte
 {
+    // Nome: Gabriel Villar Scalese    RA: 19171
+    // Nome: Nícolas Maisonette Duarte RA: 19192
     class ListaSimples<Dado>
     {
+        // Ponteiros da lista ligada
         private No<Dado> primeiro, ultimo;
 
+        // Construtor da classe
         public ListaSimples ()
         { }
 
+        // Propriedade do atributo primeiro
         public No<Dado> Primeiro
         {
             get => primeiro;
         }
 
+        // Método de inserção de um valor na lista
         public void InserirNoFim (Dado info)
         {
             if (info == null)
@@ -39,6 +45,7 @@ namespace apCaminhosMarte
             }
         }
 
+        // Método de remoção do último elemento da lista
         public void RemoverDoFim ()
         {
             if (IsVazia())
@@ -66,11 +73,13 @@ namespace apCaminhosMarte
             }
         }
 
+        // Método que retorna verdadeiro ou falso para o fato de a lista estar vazia
         public bool IsVazia ()
         {
             return primeiro == null;
         }
 
+        // Método que retorna a quantidade de elementos da lista
         public int GetQtd ()
         {
             int qtd = 0;
@@ -84,6 +93,7 @@ namespace apCaminhosMarte
             return qtd;
         }
 
+        // Método que retona o último elemento da lista
         public Dado GetDoFim ()
         {
             if (IsVazia())
@@ -92,6 +102,7 @@ namespace apCaminhosMarte
             return ultimo.Info;
         }
 
+        // Método que verifica a existência de uma determinada informação
         public bool ExistsInfo (Dado info)
         {
             No<Dado> aux = primeiro;
@@ -110,6 +121,7 @@ namespace apCaminhosMarte
             return ret;
         }
 
+        // Método que retorna o valor do objeto da classe em formato string
         public override string ToString()
         {
             string ret = "{ ";
@@ -127,6 +139,7 @@ namespace apCaminhosMarte
             return ret + " }";
         }
 
+        // Método que gera um clone do objeto da classe
         public Object Clone ()
         {
             ListaSimples<Dado> ret = null;
@@ -140,6 +153,7 @@ namespace apCaminhosMarte
             return ret;
         }
 
+        // Construtor de cópia utilizado no método Clone
         public ListaSimples(ListaSimples<Dado> modelo)
         {
             if (modelo == null)

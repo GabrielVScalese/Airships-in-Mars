@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
+    // Nome: Gabriel Villar Scalese    RA: 19171
+    // Nome: Nícolas Maisonette Duarte RA: 19192
     class ArvoreCidades
     {
+        // Atributo que representa uma árvore
         private ArvoreBinaria<CidadeMarte> arvoreBinaria;
 
-        public void ConstruirArvore(string nomeArquivo)
+        // Construtor da classe
+        public ArvoreCidades (string nomeArquivo)
+        {
+            ConstruirArvore(nomeArquivo);
+        }
+
+        // Método que lê de um arquivo texto e constroe uma árvore a partir dele
+        private void ConstruirArvore(string nomeArquivo)
         {
             if (nomeArquivo == null || nomeArquivo.Equals(""))
                 throw new Exception("Nome de arquivo invalido");
@@ -33,6 +43,7 @@ namespace apCaminhosMarte
             arquivo.Close();
         }
 
+        // Método que retorna o valor do objeto da classe em formato string 
         public override string ToString ()
         {
             return arvoreBinaria.ToString();

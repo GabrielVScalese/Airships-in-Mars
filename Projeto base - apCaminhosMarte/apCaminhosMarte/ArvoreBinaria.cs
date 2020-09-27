@@ -110,13 +110,7 @@ namespace apCaminhosMarte
             }
         }
 
-        /*// Método provisório
-        public void ExibirArvoreBinaria()
-        {
-            Percorrer(raiz);
-        }*/
-
-        // Método provisório
+        // Método auxiliar que compõe numa string a árvore
         private void Percorrer(NoArvore<Dado> atual, ref string ret)
         {
             if (atual != null)
@@ -128,6 +122,7 @@ namespace apCaminhosMarte
             }
         }
 
+        // Método que retorna o valor do objeto da classe em formato string
         public override string ToString ()
         {
             string ret = "";

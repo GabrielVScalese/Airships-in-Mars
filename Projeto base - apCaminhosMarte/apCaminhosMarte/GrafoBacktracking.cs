@@ -10,18 +10,24 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
+    // Nome: Gabriel Villar Scalese    RA: 19171
+    // Nome: Nícolas Maisonette Duarte RA: 19192
     class GrafoBacktracking
     {
+        // Atributo que representa um grafo
         private LigacaoCidade[,] matriz;
+        // Atributo que representa o nome de um arquivo texto
         private string nomeArquivo;
 
+        // Construtor da classe
         public GrafoBacktracking (string nomeArquivo)
         {
             NomeArquivo = nomeArquivo;
-            matriz = new LigacaoCidade[23, 23];
+            Matriz = new LigacaoCidade[23, 23];
             ConstruirGrafo();
         }
 
+        // Propriedade do atributo nomeArquivo
         public string NomeArquivo
         {
             get => nomeArquivo;
@@ -34,11 +40,20 @@ namespace apCaminhosMarte
             }
         }
 
+        // Propriedade do atributo matriz
         public LigacaoCidade[,] Matriz
         {
             get => matriz;
+            set
+            {
+                if (value == null)
+                    throw new Exception("Matriz invalida");
+
+                matriz = value;
+            }
         }
 
+        // Método que constroe um grafo a partir de um arquivo texto
         private void ConstruirGrafo ()
         {
             var arquivo = new StreamReader(nomeArquivo);
@@ -58,23 +73,23 @@ namespace apCaminhosMarte
             arquivo.Close();
         }
 
+        // Método que irá obter todos os caminhos possíveis entre duas cidades
         public PilhaLista<PilhaLista<Movimento>> GerarCaminhos (int origem, int destino)
         {
             int anterior = 0;
             var pilhaLista = new PilhaLista<Movimento>();
             var caminhos = new PilhaLista<PilhaLista<Movimento>>();
-            var anteriores = new PilhaLista<int>();
             var passou = new bool[23];
 
-            return BuscarCaminhos(origem, destino, pilhaLista, passou, caminhos, anteriores);
+            return BuscarCaminhos(origem, destino, pilhaLista, passou, caminhos);
         }
 
-        private PilhaLista<PilhaLista<Movimento>> BuscarCaminhos (int origem, int destino, PilhaLista<Movimento> caminho, bool[] passouCidades, PilhaLista<PilhaLista<Movimento>> caminhos, PilhaLista<int> anteriores)
+        // Método que procura todos os caminhos possíveis entre duas cidades
+        private PilhaLista<PilhaLista<Movimento>> BuscarCaminhos (int origem, int destino, PilhaLista<Movimento> caminho, bool[] passouCidades, PilhaLista<PilhaLista<Movimento>> caminhos)
         {
             int cidadeAtual = origem;
             bool[] passou = passouCidades;
             PilhaLista<Movimento> pilhaLista = caminho;
-            PilhaLista<int> ant = anteriores;
 
             for (; ; )
             {
@@ -93,8 +108,8 @@ namespace apCaminhosMarte
                         var cidadeAnterior = pilhaLista.Desempilhar();
                         cidadeAtual = cidadeAnterior.Origem;
                         passou[cidadeAtual] = true;
-                        ant.Empilhar(destino);
-                        BuscarCaminhos (cidadeAtual, destino, pilhaLista, passou, caminhos, ant);
+                        BuscarCaminhos (cidadeAtual, destino, pilhaLista, passou, caminhos);
+
                         return caminhos;
                     }
                 }
@@ -129,16 +144,14 @@ namespace apCaminhosMarte
 
             bool ExistsMovimento (int cdAtual, int sAtual)
             {
+                if (matriz[cdAtual, sAtual] == null)
+                    return false;
+
                 bool ret = false;
                 No<PilhaLista<Movimento>> aux = caminhos.Inicio;
+
                 while (aux != null)
-                {
-                    if (matriz[cdAtual, sAtual] == null)
-                    {
-                        aux = aux.Prox;
-                        continue;
-                    }
-                       
+                { 
                     if (aux.Info.ExistsInfo(new Movimento(cdAtual, destino, matriz[cdAtual, sAtual])))
                     {
                         ret = true;

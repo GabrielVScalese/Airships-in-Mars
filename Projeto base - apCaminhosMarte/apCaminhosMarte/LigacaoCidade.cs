@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
+    // Nome: Gabriel Villar Scalese    RA: 19171
+    // Nome: Nícolas Maisonette Duarte RA: 19192
     class LigacaoCidade
     {
+        // Atributo que representa a distância entre duas cidades
         private int distancia;
+        // Atributo que representa o tempo de percurso entre duas cidades
         private int tempo;
+        // Atributo que representa o custo do percurso entre duas cidades
         private int custo;
 
+        // Construtor da classe
         public LigacaoCidade (int distancia, int tempo, int custo)
         {
             Distancia = distancia;
@@ -20,6 +26,7 @@ namespace apCaminhosMarte
             Custo = custo;
         }
 
+        // Propriedade do atributo distancia
         public int Distancia
         {
             get => distancia;
@@ -32,6 +39,7 @@ namespace apCaminhosMarte
             }
         }
 
+        // Propriedade do atributo tempo
         public int Tempo
         {
             get => tempo;
@@ -44,6 +52,7 @@ namespace apCaminhosMarte
             }
         }
 
+        // Propriedade do atributo custo
         public int Custo
         {
             get => custo;
@@ -56,6 +65,7 @@ namespace apCaminhosMarte
 ;            }
         }
 
+        // Método de comparação entre um objeto da classe e outro objeto
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -81,6 +91,7 @@ namespace apCaminhosMarte
             return true;
         }
 
+        // Método que retorna o valor do objeto da classe em formato string
         public override string ToString()
         {
             return " Distancia: " + distancia + " | Tempo: " + tempo + " | Custo: " + custo + " |"; 

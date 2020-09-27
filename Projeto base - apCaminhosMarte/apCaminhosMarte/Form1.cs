@@ -11,19 +11,14 @@ using System.Windows.Forms;
 
 namespace apCaminhosMarte
 {
-    public partial class Form1 : Form
+    public partial class FrmMapa : Form
     {
         private ArvoreCidades arvoreCidades;
         private GrafoBacktracking grafo;
         private PilhaLista<PilhaLista<Movimento>> caminhos;
-        public Form1()
+        public FrmMapa()
         {
             InitializeComponent();
-        }
-
-        private void TxtCaminhos_DoubleClick(object sender, EventArgs e)
-        {
-           
         }
 
         private void BtnBuscar_Click(object sender, EventArgs e)
@@ -44,7 +39,12 @@ namespace apCaminhosMarte
             else
                 MessageBox.Show("Número de caminhos encontrados: " + caminhos.GetQtd().ToString());
 
-            ExibirCaminhos();
+            LimparDados();
+            if (caminhos.GetQtd() > 0)
+            {
+                ExibirCaminhos();
+                ExibirMelhorCaminho();
+            }
         }
 
         private int GetOrigem ()
@@ -67,6 +67,38 @@ namespace apCaminhosMarte
             int id = int.Parse(linhaSelecionada.Split('-')[0].Trim());
 
             return id;
+        }
+
+        private PilhaLista<Movimento> MelhorCaminho ()
+        {
+            No<PilhaLista<Movimento>> umCaminho = caminhos.Inicio;
+            PilhaLista<Movimento> melhorCaminho = umCaminho.Info;
+            while (umCaminho != null)
+            {
+                if (umCaminho.Prox == null)
+                    break;
+
+                if (ObterDistancia(umCaminho.Info) > ObterDistancia(umCaminho.Prox.Info))
+                    melhorCaminho = umCaminho.Prox.Info;
+
+                umCaminho = umCaminho.Prox;
+            }
+
+            return melhorCaminho;
+        }
+
+        private int ObterDistancia (PilhaLista<Movimento> umCaminho)
+        {
+            No<Movimento> aux = umCaminho.Inicio;
+            int distancia = 0;
+            while (aux != null)
+            {
+                distancia += aux.Info.Lc.Distancia;
+
+                aux = aux.Prox;
+            }
+
+            return distancia;
         }
 
         private void ExibirCaminhos ()
@@ -92,14 +124,37 @@ namespace apCaminhosMarte
             dgvCaminhos.Refresh();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void LimparDados ()
         {
-            grafo = new GrafoBacktracking(@"C:\Users\gabri\Downloads\CaminhosEntreCidadesMarte.txt");
-            arvoreCidades = new ArvoreCidades();
-            arvoreCidades.ConstruirArvore(@"C:\Users\gabri\Downloads\CidadesMarte.txt");
+            dgvCaminhos.Rows.Clear();
+            dgvMelhorCaminho.Rows.Clear();
         }
 
-        private void tabControl1_Click(object sender, EventArgs e)
+        private void ExibirMelhorCaminho ()
+        {
+            dgvMelhorCaminho.RowCount = 1;
+
+            var melhorCaminho = MelhorCaminho();
+            var umMovimento = melhorCaminho.Inicio;
+            for (int col = 0; col < 6; col++)
+            {
+                if (umMovimento == null)
+                    break;
+
+                dgvMelhorCaminho[col, 0].Value = umMovimento.Info.ToString();
+                umMovimento = umMovimento.Prox;
+            }
+            
+            dgvMelhorCaminho.Refresh();
+        }
+
+        private void FrmMapa_Load(object sender, EventArgs e)
+        {
+            grafo = new GrafoBacktracking(@"C:\Users\gabri\Downloads\CaminhosEntreCidadesMarte.txt");
+            arvoreCidades = new ArvoreCidades(@"C:\Users\gabri\Downloads\CidadesMarteOrdenado.txt");
+        }
+
+        private void tbControl_Click(object sender, EventArgs e)
         {
             lsbCidades.Items.Clear();
             string[] cidadesMarte = arvoreCidades.ToString().Split(',');
