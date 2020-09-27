@@ -75,6 +75,11 @@ namespace apCaminhosMarte
             }
         }
 
+        public bool TemId (int id)
+        {
+            return this.id.Equals(id);
+        }
+
         // Método de comparação de informações entre dois objetos da classe
         public int CompareTo (CidadeMarte cm)
         {

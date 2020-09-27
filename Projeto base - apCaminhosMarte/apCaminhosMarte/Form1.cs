@@ -33,6 +33,12 @@ namespace apCaminhosMarte
                 return;
             }
 
+            if (idOrigem == idDestino)
+            {
+                MessageBox.Show("Destino é igual à origem!");
+                return;
+            }
+                
             caminhos = grafo.GerarCaminhos(idOrigem, idDestino);
             if (caminhos.GetQtd() == 0)
                 MessageBox.Show("Nenhum caminho foi encontrado!");
@@ -151,7 +157,7 @@ namespace apCaminhosMarte
         private void FrmMapa_Load(object sender, EventArgs e)
         {
             grafo = new GrafoBacktracking(@"C:\Users\gabri\Downloads\CaminhosEntreCidadesMarte.txt");
-            arvoreCidades = new ArvoreCidades(@"C:\Users\gabri\Downloads\CidadesMarteOrdenado.txt");
+            arvoreCidades = new ArvoreCidades(@"C:\Users\gabri\Downloads\CidadesMarte.txt");
         }
 
         private void tbControl_Click(object sender, EventArgs e)

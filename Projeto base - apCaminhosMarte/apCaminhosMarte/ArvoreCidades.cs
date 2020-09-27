@@ -43,6 +43,33 @@ namespace apCaminhosMarte
             arquivo.Close();
         }
 
+        // Método que encontra uma cidade na da árvore a partir do id
+        public CidadeMarte GetCidade (int idCidade) 
+        {
+            CidadeMarte ret = null;
+            return VisitarCidades(arvoreBinaria.Raiz, idCidade, ret);
+        }
+
+        // Método que percorre a árvore para encontrar a cidade a partir do id
+        private CidadeMarte VisitarCidades (NoArvore<CidadeMarte> atual, int idCidade, CidadeMarte cm)
+        {
+            CidadeMarte ret = null;
+            if (atual != null)
+            {
+                if (atual.Info.Id == idCidade)
+                {
+                    ret = atual.Info;
+                    return ret;
+                }
+                   
+               ret = VisitarCidades(atual.Esq, idCidade, ret);
+               if (ret == null)
+                   ret = VisitarCidades(atual.Dir, idCidade, ret);
+            }
+
+            return ret;
+        }
+
         // Método que retorna o valor do objeto da classe em formato string 
         public override string ToString ()
         {

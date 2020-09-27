@@ -75,7 +75,6 @@ namespace apCaminhosMarte
                     antecessor = raiz;
                     PercorrerParaInserir(info, atual.Dir);
                 }
-                    
             }
         }
 
@@ -84,7 +83,7 @@ namespace apCaminhosMarte
         {
             if (atual == null)
             {
-                if (antecessor.Esq == null)
+                if (antecessor.Info.CompareTo(info) >  0)
                 {
                     atual = new NoArvore<Dado>(info, null, null);
                     antecessor.Esq = atual;
