@@ -76,7 +76,6 @@ namespace apCaminhosMarte
         // Método que irá obter todos os caminhos possíveis entre duas cidades
         public PilhaLista<PilhaLista<Movimento>> GerarCaminhos (int origem, int destino)
         {
-            int anterior = 0;
             var pilhaLista = new PilhaLista<Movimento>();
             var caminhos = new PilhaLista<PilhaLista<Movimento>>();
             var passou = new bool[23];
@@ -94,7 +93,7 @@ namespace apCaminhosMarte
             for (; ; )
             {
                 bool achouCidade = false;
-                var cidadeEncontrada = VerificarCidades(cidadeAtual, ref achouCidade);
+                var cidadeEncontrada = VerificarCidades (cidadeAtual, ref achouCidade);
                 if (achouCidade == true)
                 {
                     pilhaLista.Empilhar(new Movimento(cidadeAtual, cidadeEncontrada.Destino, cidadeEncontrada.Lc));
@@ -107,7 +106,6 @@ namespace apCaminhosMarte
                         caminhos.Empilhar(caminhoClone);
                         var cidadeAnterior = pilhaLista.Desempilhar();
                         cidadeAtual = cidadeAnterior.Origem;
-                        passou[cidadeAtual] = true;
                         BuscarCaminhos (cidadeAtual, destino, pilhaLista, passou, caminhos);
 
                         return caminhos;
@@ -115,7 +113,6 @@ namespace apCaminhosMarte
                 }
                 else
                 {
-
                     if (pilhaLista.IsVazia())
                         break;
 
