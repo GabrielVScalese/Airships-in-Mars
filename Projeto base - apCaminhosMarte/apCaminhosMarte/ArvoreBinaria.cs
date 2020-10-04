@@ -12,13 +12,13 @@ namespace apCaminhosMarte
         // Atributos que representa a raiz
         private NoArvore<Dado> raiz;
         // Atributo que representa o nó atual
-        private NoArvore<Dado> atual; 
+        private NoArvore<Dado> atual;
         // Atributo que representa o nó anterior ao nó atual
         private NoArvore<Dado> antecessor;
 
         // Construtor da classe
-        public ArvoreBinaria ()
-        {}
+        public ArvoreBinaria()
+        { }
 
         // Propriedade do atributo raiz
         public NoArvore<Dado> Raiz
@@ -49,7 +49,7 @@ namespace apCaminhosMarte
                 antecessor = value;
             }
         }
-        
+
         // Método de inserção de informações na árvore binária (PRÉ-ORDEM)
         public void InserirInfo(Dado info)
         {
@@ -83,7 +83,7 @@ namespace apCaminhosMarte
         {
             if (atual == null)
             {
-                if (antecessor.Info.CompareTo(info) >  0)
+                if (antecessor.Info.CompareTo(info) > 0)
                 {
                     atual = new NoArvore<Dado>(info, null, null);
                     antecessor.Esq = atual;
@@ -122,11 +122,33 @@ namespace apCaminhosMarte
         }
 
         // Método que retorna o valor do objeto da classe em formato string
-        public override string ToString ()
+        public override string ToString()
         {
             string ret = "";
             Percorrer(raiz, ref ret);
             return ret;
+        }
+
+        public void DesenharArvore(bool primeiraVez, NoArvore<Dado> raiz, int x, int y, double angulo, double comprimento, Graphics g)
+        {
+            int xf, yf;
+            if (raiz != null)
+            {
+                Pen caneta = new Pen(Color.Red);
+                xf = (int)Math.Round(x + Math.Cos(angulo) * comprimento);
+                yf = (int)Math.Round(y + Math.Sin(angulo) * comprimento);
+
+                if (primeiraVez)
+                    yf = 25;
+
+                g.DrawLine(caneta, x, y, xf, yf);
+                DesenharArvore(false, raiz.Esq, xf, yf, angulo, comprimento * 0.8, g);
+                DesenharArvore(false, raiz.Dir, xf, yf, angulo, comprimento * 0.8, g);
+                SolidBrush preenchimento = new SolidBrush(Color.Blue);
+                g.FillEllipse(preenchimento, xf - 25, yf - 15, 42, 30);
+                g.DrawString(Convert.ToString(raiz.Info.ToString()), new Font("Comic Sans", 10),
+                new SolidBrush(Color.Yellow), xf - 23, yf - 7);
+            }
         }
     }
 }

@@ -25,7 +25,6 @@ namespace apCaminhosMarte
 
         private void BtnBuscar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Buscar caminhos entre cidades selecionadas");
             int idOrigem = GetOrigem();
             int idDestino = GetDestino();
 
@@ -127,21 +126,33 @@ namespace apCaminhosMarte
             return distancia;
         }
 
+        private void InicializarColunas (int numeroColunas, DataGridView dgv)
+        {
+            for (int col = 0; col < numeroColunas; col++)
+                dgv.Columns[col].HeaderText = "Cidade";
+        }
+
         private void ExibirCaminhos ()
         {
             dgvCaminhos.RowCount = caminhos.GetQtd();
-            dgvCaminhos.ColumnCount = MaiorNumeroMovimentos() ;
+            dgvCaminhos.ColumnCount = MaiorNumeroMovimentos() + 1;
+
+            InicializarColunas(dgvCaminhos.ColumnCount, dgvCaminhos);
 
             var umCaminho = caminhos.Inicio;
             for (int lin = 0; lin < caminhos.GetQtd(); lin++)
             {
                 var umMovimento = umCaminho.Info.Inicio;
-                for (int col = 0; col < 6; col++)
+                for (int col = 0; col < dgvCaminhos.ColumnCount; col++)
                 {
                     if (umMovimento == null)
                         break;
 
-                    dgvCaminhos[col, lin].Value = umMovimento.Info.ToString();
+                    var primeiraCidade = arvoreCidades.GetCidade(umMovimento.Info.Origem);
+                    var segundaCidade = arvoreCidades.GetCidade(umMovimento.Info.Destino);
+                    dgvCaminhos[col, lin].Value = primeiraCidade.NomeCidade;
+                    dgvCaminhos[col + 1, lin].Value = segundaCidade.NomeCidade;
+
                     umMovimento = umMovimento.Prox;
                 }
 
@@ -155,20 +166,26 @@ namespace apCaminhosMarte
         {
             dgvCaminhos.Rows.Clear();
             dgvMelhorCaminho.Rows.Clear();
+            pbMapa.Refresh();
         }
 
         private void ExibirMelhorCaminho ()
         {
-            dgvMelhorCaminho.RowCount = 1;
-
             var melhorCaminho = MelhorCaminho();
+            dgvMelhorCaminho.RowCount = 1;
+            dgvMelhorCaminho.ColumnCount = melhorCaminho.GetQtd() + 1;
+
             var umMovimento = melhorCaminho.Inicio;
-            for (int col = 0; col < 6; col++)
+            for (int col = 0; col < dgvMelhorCaminho.ColumnCount; col++)
             {
                 if (umMovimento == null)
                     break;
 
-                dgvMelhorCaminho[col, 0].Value = umMovimento.Info.ToString();
+                var primeiraCidade = arvoreCidades.GetCidade(umMovimento.Info.Origem);
+                var segundaCidade = arvoreCidades.GetCidade(umMovimento.Info.Destino);
+                dgvMelhorCaminho[col, 0].Value = primeiraCidade.NomeCidade;
+                dgvMelhorCaminho[col + 1, 0].Value = segundaCidade.NomeCidade;
+
                 umMovimento = umMovimento.Prox;
             }
             
@@ -185,20 +202,14 @@ namespace apCaminhosMarte
 
         private void tbControl_Click(object sender, EventArgs e)
         {
-            lsbCidades.Items.Clear();
-            string[] cidadesMarte = arvoreCidades.ToString().Split(',');
-            for (int i = 0; i < cidadesMarte.Length; i++)
-                if (i == 0)
-                    lsbCidades.Items.Add(" " + cidadesMarte[i]);
-                else
-                    lsbCidades.Items.Add("\n" + cidadesMarte[i]);
+            /*Graphics g = lsbCidades.CreateGraphics();
+            arvoreCidades.DesenharCidades(lsbCidades.Width / 2, 600, g, 100, 10);*/
         }
 
         private void DesenharCaminho (PilhaLista<Movimento> umCaminho)
         {
             pbMapa.Refresh();
             No<Movimento> umMovimento = umCaminho.Inicio;
-            int movimentos = 0;
             while (umMovimento != null)
             {
                 var pontoInicial = arvoreCidades.GetCidade(umMovimento.Info.Origem);
@@ -212,18 +223,16 @@ namespace apCaminhosMarte
                 GetProporcao(ref x, ref y);
                 GetProporcao(ref xf, ref yf);
 
-
-                Pen caneta = new Pen(new SolidBrush(Color.Red));
+                Pen caneta = new Pen(Color.FromArgb(128, 0, 0, 255), 15);
                 caneta.Width = 2;
-                Graphics g = pbMapa.CreateGraphics();
-                g.DrawString(pontoInicial.NomeCidade.Trim(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(x + 10), Convert.ToInt32(y));
-                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(x), Convert.ToInt32(y), 6, 8);
-                g.DrawLine(caneta, pontoInicial.X / 4, pontoInicial.Y / 4, pontoFinal.X / 4, pontoFinal.Y / 4);
-                g.DrawString(umMovimento.Info.Lc.Distancia.ToString(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32((xf + x) / 2), Convert.ToInt32((y + yf)/2));
-                g.DrawString(pontoFinal.NomeCidade.Trim(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(xf + 10), Convert.ToInt32(yf));
-                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(xf), Convert.ToInt32(yf), 6, 8);
-                
 
+                Graphics g = pbMapa.CreateGraphics();
+                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(x), Convert.ToInt32(y), 6, 6);
+                g.DrawString(pontoInicial.NomeCidade.Trim(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(x - 10), Convert.ToInt32(y - 20));
+                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(xf), Convert.ToInt32(yf), 6, 6);
+                g.DrawString(pontoFinal.NomeCidade.Trim() + " (" + umMovimento.Info.Lc.Distancia.ToString() + ")", new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(xf - 10), Convert.ToInt32(yf - 20));
+                g.DrawLine(caneta, Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(xf), Convert.ToInt32(yf));
+             
                 umMovimento = umMovimento.Prox;
             }
         }
@@ -244,10 +253,11 @@ namespace apCaminhosMarte
 
         private void GetProporcao (ref double x, ref double y)
         {
-            double proporcao = pbMapa.Size.Height / 2048.0;
+            double proporcaoX = pbMapa.Size.Width / 4096.0;
+            double proporcaoY = pbMapa.Size.Height / 2048.0;
 
-            x = x * proporcao;
-            y = y * proporcao;
+            x = x * proporcaoX;
+            y = y * proporcaoY;
         }
 
         private void dgvCaminhos_CellClick(object sender, DataGridViewCellEventArgs e)

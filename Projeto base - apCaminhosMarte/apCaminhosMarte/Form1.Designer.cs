@@ -238,9 +238,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(1034, 429);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 13);
+            this.label4.Size = new System.Drawing.Size(85, 13);
             this.label4.TabIndex = 7;
-            this.label4.Text = "Melhor caminho";
+            this.label4.Text = "Melhor caminho:";
             // 
             // label3
             // 

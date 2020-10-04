@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace apCaminhosMarte
 {
@@ -15,7 +17,7 @@ namespace apCaminhosMarte
         private ArvoreBinaria<CidadeMarte> arvoreBinaria;
 
         // Construtor da classe
-        public ArvoreCidades (string nomeArquivo)
+        public ArvoreCidades(string nomeArquivo)
         {
             ConstruirArvore(nomeArquivo);
         }
@@ -32,7 +34,7 @@ namespace apCaminhosMarte
             {
                 string linha = arquivo.ReadLine();
                 int id = int.Parse(linha.Substring(0, 3));
-                string nomeCidade = linha.Substring(3,15);
+                string nomeCidade = linha.Substring(3, 15);
                 int x = int.Parse(linha.Substring(18, 5));
                 int y = int.Parse(linha.Substring(23, 5));
 
@@ -44,14 +46,14 @@ namespace apCaminhosMarte
         }
 
         // Método que encontra uma cidade na da árvore a partir do id
-        public CidadeMarte GetCidade (int idCidade) 
+        public CidadeMarte GetCidade(int idCidade)
         {
             CidadeMarte ret = null;
             return VisitarCidades(arvoreBinaria.Raiz, idCidade, ret);
         }
 
         // Método que percorre a árvore para encontrar a cidade a partir do id
-        private CidadeMarte VisitarCidades (NoArvore<CidadeMarte> atual, int idCidade, CidadeMarte cm)
+        private CidadeMarte VisitarCidades(NoArvore<CidadeMarte> atual, int idCidade, CidadeMarte cm)
         {
             CidadeMarte ret = null;
             if (atual != null)
@@ -61,19 +63,24 @@ namespace apCaminhosMarte
                     ret = atual.Info;
                     return ret;
                 }
-                   
-               ret = VisitarCidades(atual.Esq, idCidade, ret);
-               if (ret == null)
-                   ret = VisitarCidades(atual.Dir, idCidade, ret);
+
+                ret = VisitarCidades(atual.Esq, idCidade, ret);
+                if (ret == null)
+                    ret = VisitarCidades(atual.Dir, idCidade, ret);
             }
 
             return ret;
         }
 
         // Método que retorna o valor do objeto da classe em formato string 
-        public override string ToString ()
+        public override string ToString()
         {
             return arvoreBinaria.ToString();
+        }
+
+        public void DesenharCidades (int x, int y, Graphics g, double angulo, int comprimento)
+        {
+            arvoreBinaria.DesenharArvore(true, arvoreBinaria.Raiz, x, y, angulo, comprimento, g);
         }
     }
 }
