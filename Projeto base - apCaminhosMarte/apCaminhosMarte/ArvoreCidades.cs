@@ -56,19 +56,21 @@ namespace apCaminhosMarte
         private CidadeMarte VisitarCidades(NoArvore<CidadeMarte> atual, int idCidade, CidadeMarte cm)
         {
             CidadeMarte ret = null;
-            if (atual != null)
-            {
-                if (atual.Info.Id == idCidade)
-                {
-                    ret = atual.Info;
-                    return ret;
-                }
 
-                ret = VisitarCidades(atual.Esq, idCidade, ret);
-                if (ret == null)
-                    ret = VisitarCidades(atual.Dir, idCidade, ret);
+            if (atual == null)
+                return ret;
+
+            if (atual.Info.Id == idCidade)
+            {
+                 ret = atual.Info;
+                 return ret;
             }
 
+            if (atual.Info.Id.CompareTo(idCidade) > 0)
+                ret = VisitarCidades(atual.Esq, idCidade, ret);
+            else
+                ret = VisitarCidades(atual.Dir, idCidade, ret);
+            
             return ret;
         }
 
