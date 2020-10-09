@@ -129,7 +129,7 @@ namespace apCaminhosMarte
             return ret;
         }
 
-        public void DesenharArvore(bool primeiraVez, NoArvore<Dado> raiz, int x, int y, double angulo, double comprimento, Graphics g)
+        public void DesenharArvore(bool primeiraVez, NoArvore<Dado> raiz, int x, int y, double angulo, double incremento, double comprimento, Graphics g)
         {
             int xf, yf;
             if (raiz != null)
@@ -142,8 +142,10 @@ namespace apCaminhosMarte
                     yf = 25;
 
                 g.DrawLine(caneta, x, y, xf, yf);
-                DesenharArvore(false, raiz.Esq, xf, yf, angulo, comprimento * 0.8, g);
-                DesenharArvore(false, raiz.Dir, xf, yf, angulo, comprimento * 0.8, g);
+                DesenharArvore(false, raiz.Esq, xf, yf, Math.PI / 2 + incremento,
+                incremento * 0.60, comprimento * 0.8, g);
+                DesenharArvore(false, raiz.Dir, xf, yf, Math.PI / 2 - incremento,
+                incremento * 0.60, comprimento * 0.8, g);
                 SolidBrush preenchimento = new SolidBrush(Color.Blue);
                 g.FillEllipse(preenchimento, xf - 25, yf - 15, 42, 30);
                 g.DrawString(Convert.ToString(raiz.Info.ToString()), new Font("Comic Sans", 10),

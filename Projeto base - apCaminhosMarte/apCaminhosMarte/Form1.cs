@@ -16,7 +16,6 @@ namespace apCaminhosMarte
         private ArvoreCidades arvoreCidades;
         private GrafoBacktracking grafo;
         private PilhaLista<PilhaLista<Movimento>> caminhos;
-        private Image imageClone;
 
         public FrmMapa()
         {
@@ -196,14 +195,12 @@ namespace apCaminhosMarte
         {
             grafo = new GrafoBacktracking(@"C:\Users\gabri\Downloads\CaminhosEntreCidadesMarte.txt");
             arvoreCidades = new ArvoreCidades(@"C:\Users\gabri\Downloads\CidadesMarte.txt");
-
-            imageClone = (Image)pbMapa.Image.Clone();
         }
 
         private void tbControl_Click(object sender, EventArgs e)
         {
-            /*Graphics g = lsbCidades.CreateGraphics();
-            arvoreCidades.DesenharCidades(lsbCidades.Width / 2, 600, g, 100, 10);*/
+            Graphics g = lsbCidades.CreateGraphics();
+            arvoreCidades.DesenharCidades(lsbCidades.Width / 2, 600, g, Math.PI / 2, 1.25, 200);
         }
 
         private void DesenharCaminho (PilhaLista<Movimento> umCaminho)
@@ -227,12 +224,16 @@ namespace apCaminhosMarte
                 caneta.Width = 2;
 
                 Graphics g = pbMapa.CreateGraphics();
-                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(x), Convert.ToInt32(y), 6, 6);
-                g.DrawString(pontoInicial.NomeCidade.Trim(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(x - 10), Convert.ToInt32(y - 20));
-                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(xf), Convert.ToInt32(yf), 6, 6);
-                g.DrawString(pontoFinal.NomeCidade.Trim() + " (" + umMovimento.Info.Lc.Distancia.ToString() + ")", new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(xf - 10), Convert.ToInt32(yf - 20));
+
+                g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(x - 5), Convert.ToInt32(y - 5), 10, 10);
                 g.DrawLine(caneta, Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(xf), Convert.ToInt32(yf));
-             
+                g.DrawString(pontoInicial.NomeCidade.Trim(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(x - 10), Convert.ToInt32(y - 20));
+                //g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(xf), Convert.ToInt32(yf), 10, 10);
+                g.DrawString(pontoFinal.NomeCidade.Trim() + " (" + umMovimento.Info.Lc.Distancia.ToString() + ")", new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(xf - 10), Convert.ToInt32(yf - 20));
+                
+                if (umMovimento.Prox == null)
+                    g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(xf - 5), Convert.ToInt32(yf - 5), 10, 10);
+
                 umMovimento = umMovimento.Prox;
             }
         }

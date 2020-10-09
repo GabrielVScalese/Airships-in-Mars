@@ -88,7 +88,7 @@ namespace apCaminhosMarte
 
         public override string ToString()
         {
-            return "| Id: " + id + " | N.Cidade: " + nomeCidade.Trim() + " | X: " + x + " | Y: " + y + " |";
+            return id + " - " + nomeCidade.Trim();
         }
     }
 }

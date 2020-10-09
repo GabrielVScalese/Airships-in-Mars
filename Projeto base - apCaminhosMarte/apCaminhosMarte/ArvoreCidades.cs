@@ -80,9 +80,9 @@ namespace apCaminhosMarte
             return arvoreBinaria.ToString();
         }
 
-        public void DesenharCidades (int x, int y, Graphics g, double angulo, int comprimento)
+        public void DesenharCidades (int x, int y, Graphics g, double angulo, double incremento, double comprimento)
         {
-            arvoreBinaria.DesenharArvore(true, arvoreBinaria.Raiz, x, y, angulo, comprimento, g);
+            arvoreBinaria.DesenharArvore(true, arvoreBinaria.Raiz, x, y, angulo, incremento, comprimento, g);
         }
     }
 }
