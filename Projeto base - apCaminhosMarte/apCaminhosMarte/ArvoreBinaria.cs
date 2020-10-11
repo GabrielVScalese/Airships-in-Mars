@@ -5,8 +5,8 @@ using System.Text;
 
 namespace apCaminhosMarte
 {
-    // Nome: Gabriel Villar Scalese    RA: 19171
-    // Nome: Nícolas Maisonette Duarte RA: 19192
+    // Nome: Gabriel Villar Scalese     RA: 19171
+    // Nome: Nícolas Maisonnette Duarte RA: 19192
     public class ArvoreBinaria<Dado> where Dado : IComparable<Dado>
     {
         // Atributos que representa a raiz
@@ -114,7 +114,6 @@ namespace apCaminhosMarte
         {
             if (atual != null)
             {
-                //Console.WriteLine(atual.Info);
                 ret += atual.Info.ToString() + ", ";
                 Percorrer(atual.Esq, ref ret);
                 Percorrer(atual.Dir, ref ret);
@@ -129,6 +128,7 @@ namespace apCaminhosMarte
             return ret;
         }
 
+        // Método que desenha a árvore e seus valores em um componente
         public void DesenharArvore(bool primeiraVez, NoArvore<Dado> raiz, int x, int y, double angulo, double incremento, double comprimento, Graphics g)
         {
             int xf, yf;
@@ -149,7 +149,7 @@ namespace apCaminhosMarte
                 SolidBrush preenchimento = new SolidBrush(Color.Blue);
                 g.FillEllipse(preenchimento, xf - 25, yf - 15, 42, 30);
                 g.DrawString(Convert.ToString(raiz.Info.ToString()), new Font("Comic Sans", 10),
-                new SolidBrush(Color.Yellow), xf - 23, yf - 7);
+                new SolidBrush(Color.Black), xf - 23, yf - 7);
             }
         }
     }

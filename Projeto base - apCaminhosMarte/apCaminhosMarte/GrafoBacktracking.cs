@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
-    // Nome: Gabriel Villar Scalese    RA: 19171
-    // Nome: Nícolas Maisonette Duarte RA: 19192
+    // Nome: Gabriel Villar Scalese     RA: 19171
+    // Nome: Nícolas Maisonnette Duarte RA: 19192
     class GrafoBacktracking
     {
         // Atributo que representa um grafo
@@ -93,14 +93,14 @@ namespace apCaminhosMarte
             for (; ; )
             {
                 bool achouCidade = false;
-                var cidadeEncontrada = VerificarCidades (cidadeAtual, ref achouCidade);
+                var cidadeEncontrada = VerificarCidades (cidadeAtual, ref achouCidade); // Obtenção ou não de uma saída
                 if (achouCidade == true)
                 {
-                    pilhaLista.Empilhar(new Movimento(cidadeAtual, cidadeEncontrada.Destino, cidadeEncontrada.Lc));
+                    pilhaLista.Empilhar(new Movimento(cidadeAtual, cidadeEncontrada.Destino, cidadeEncontrada.Lc)); // Empilha na pilha parcial de soluções, o movimento realizado
                     passou[cidadeAtual] = true;
                     cidadeAtual = cidadeEncontrada.Destino;
 
-                    if (cidadeAtual == destino)
+                    if (cidadeAtual == destino) // Uma solução foi encontrada
                     {
                         PilhaLista<Movimento> caminhoClone = (PilhaLista<Movimento>)pilhaLista.Clone();
                         caminhos.Empilhar(caminhoClone);
@@ -113,7 +113,7 @@ namespace apCaminhosMarte
                 }
                 else
                 {
-                    if (pilhaLista.IsVazia())
+                    if (pilhaLista.IsVazia()) // Soluções esgotaram
                         break;
 
                     passou[cidadeAtual] = true;
@@ -124,7 +124,7 @@ namespace apCaminhosMarte
 
             return caminhos;
 
-            Movimento VerificarCidades(int cdAtual, ref bool encontrou)
+            Movimento VerificarCidades(int cdAtual, ref bool encontrou) // Verifica alguma saída possível
             {
                 Movimento ret = null;
                 for (int j = 0; j < 23; j++)
@@ -139,7 +139,7 @@ namespace apCaminhosMarte
                 return ret;
             }
 
-            bool ExistsMovimento (int cdAtual, int sAtual)
+            bool ExistsMovimento (int cdAtual, int sAtual) // Verifica se o movimento gerado já foi feito
             {
                 if (matriz[cdAtual, sAtual] == null)
                     return false;
@@ -161,7 +161,7 @@ namespace apCaminhosMarte
                 return ret;
             }
 
-            bool IsFree(int cdAtual, int sAtual)
+            bool IsFree(int cdAtual, int sAtual) // Verifica se posição atual é válida
             {
                 bool ret = false;
 

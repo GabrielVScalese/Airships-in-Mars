@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
-    // Nome: Gabriel Villar Scalese    RA: 19171
-    // Nome: Nícolas Maisonette Duarte RA: 19192
+    // Nome: Gabriel Villar Scalese     RA: 19171
+    // Nome: Nícolas Maisonnette Duarte RA: 19192
     class LigacaoCidade
     {
         // Atributo que representa a distância entre duas cidades

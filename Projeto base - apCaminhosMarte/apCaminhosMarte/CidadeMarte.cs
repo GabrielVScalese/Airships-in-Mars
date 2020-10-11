@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
-    // Nome: Gabriel Villar Scalese    RA: 19171
-    // Nome: Nícolas Maisonette Duarte RA: 19192
+    // Nome: Gabriel Villar Scalese     RA: 19171
+    // Nome: Nícolas Maisonnette Duarte RA: 19192
     class CidadeMarte : IComparable<CidadeMarte>
     {
         // Atributo que representa o id da cidade
@@ -75,17 +75,13 @@ namespace apCaminhosMarte
             }
         }
 
-        public bool TemId (int id)
-        {
-            return this.id.Equals(id);
-        }
-
         // Método de comparação de informações entre dois objetos da classe
         public int CompareTo (CidadeMarte cm)
         {
             return id.CompareTo(cm.id);
         }
 
+        // Método que retorna o valor do objeto da classe em formato string
         public override string ToString()
         {
             return id + " - " + nomeCidade.Trim();

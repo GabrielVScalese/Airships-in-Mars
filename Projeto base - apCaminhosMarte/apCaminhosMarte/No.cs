@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace apCaminhosMarte
 {
-    // Nome: Gabriel Villar Scalese    RA: 19171
-    // Nome: Nícolas Maisonette Duarte RA: 19192
+    // Nome: Gabriel Villar Scalese     RA: 19171
+    // Nome: Nícolas Maisonnette Duarte RA: 19192
     class No<Dado>
     {
         // Atributo que representa a informação do nó

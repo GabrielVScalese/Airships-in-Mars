@@ -9,8 +9,8 @@ using System.Windows.Forms.VisualStyles;
 
 namespace apCaminhosMarte
 {
-    // Nome: Gabriel Villar Scalese    RA: 19171
-    // Nome: Nícolas Maisonette Duarte RA: 19192
+    // Nome: Gabriel Villar Scalese     RA: 19171
+    // Nome: Nícolas Maisonnette Duarte RA: 19192
     class ListaSimples<Dado>
     {
         // Ponteiros da lista ligada
