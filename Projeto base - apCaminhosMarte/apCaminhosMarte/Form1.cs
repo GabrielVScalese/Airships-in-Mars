@@ -45,7 +45,7 @@ namespace apCaminhosMarte
                 return;
             }
                 
-            caminhos = grafo.GerarCaminhos(idOrigem, idDestino);
+            caminhos = grafo.ProcurarCaminhos(idOrigem, idDestino);
             if (caminhos.GetQtd() == 0)
                 MessageBox.Show("Nenhum caminho foi encontrado!");
             else
