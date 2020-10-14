@@ -21,7 +21,6 @@ namespace apCaminhosMarte
         private LigacaoCidade[,] matriz;
         // Atributo que representa o nome de um arquivo texto
         private string nomeArquivo;
-
         private int cidadeAtual;
         private PilhaLista<Movimento> pilha;
         private PilhaLista<PilhaLista<Movimento>> caminhos;

@@ -16,7 +16,6 @@ namespace apCaminhosMarte
         private int destino;
         // Atributo que representa os dados do percurso
         private LigacaoCidade lc;
-        private PilhaLista<int> cidadesPassou;
 
         // Construtor da classe
         public Movimento (int origem, int destino, LigacaoCidade lc)
@@ -63,21 +62,6 @@ namespace apCaminhosMarte
 
                 lc = value;
             }
-        }
-
-        public PilhaLista<int> CidadePassou
-        {
-            get => cidadesPassou;
-        }
-
-        public void InserirCidade (int id)
-        {
-            cidadesPassou.Empilhar(id);
-        }
-
-        public bool PassouCidade (int id)
-        {
-            return cidadesPassou.ExistsInfo(id);
         }
 
         // Método de comparação entre um objeto da classe e outro objeto
