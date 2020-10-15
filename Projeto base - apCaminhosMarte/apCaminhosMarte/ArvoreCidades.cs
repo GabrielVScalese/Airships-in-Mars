@@ -15,7 +15,6 @@ namespace apCaminhosMarte
     {
         // Atributo que representa uma árvore
         private ArvoreBinaria<CidadeMarte> arvoreBinaria;
-        private PilhaLista<CidadeMarte> cidades;
 
         // Construtor da classe
         public ArvoreCidades(string nomeArquivo)
@@ -31,7 +30,6 @@ namespace apCaminhosMarte
 
             var arquivo = new StreamReader(nomeArquivo);
             arvoreBinaria = new ArvoreBinaria<CidadeMarte>();
-            cidades = new PilhaLista<CidadeMarte>();
             while (!arquivo.EndOfStream)
             {
                 string linha = arquivo.ReadLine();
@@ -42,7 +40,6 @@ namespace apCaminhosMarte
 
                 var cidadeMarte = new CidadeMarte(id, nomeCidade, x, y);
                 arvoreBinaria.InserirInfo(cidadeMarte);
-                cidades.Empilhar(cidadeMarte);
             }
 
             arquivo.Close();
@@ -87,11 +84,6 @@ namespace apCaminhosMarte
         public void DesenharCidades (int x, int y, Graphics g, double angulo, double incremento, double comprimento)
         {
             arvoreBinaria.DesenharArvore(true, arvoreBinaria.Raiz, x, y, angulo, incremento, comprimento, g);
-        }
-
-        public PilhaLista<CidadeMarte> Cidades
-        {
-            get => cidades;
         }
     }
 }
