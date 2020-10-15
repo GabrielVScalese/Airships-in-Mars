@@ -121,30 +121,6 @@ namespace apCaminhosMarte
             return ret;
         }
 
-        public bool ExistsLigacao (Dado info, Dado info2)
-        {
-            No<Dado> aux = primeiro;
-            bool ret = false;
-            for (; ; )
-            {
-                if (aux.Prox == null)
-                    break;
-
-                if (aux.Info.Equals(info2))
-                {
-                    if (aux.Prox.Info.Equals(info))
-                    {
-                        ret = true;
-                        break;
-                    }
-                }
-
-                aux = aux.Prox;
-            }
-
-            return ret;
-        }
-
         // Método que retorna o valor do objeto da classe em formato string
         public override string ToString()
         {

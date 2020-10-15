@@ -148,7 +148,7 @@ namespace apCaminhosMarte
                 incremento * 0.60, comprimento * 0.8, g);
                 SolidBrush preenchimento = new SolidBrush(Color.Blue);
                 g.FillEllipse(preenchimento, xf - 25, yf - 15, 42, 30);
-                g.DrawString(Convert.ToString(raiz.Info.ToString()), new Font("Comic Sans", 10),
+                g.DrawString(Convert.ToString(raiz.Info.ToString()), new Font("Comic Sans", 10, FontStyle.Bold),
                 new SolidBrush(Color.Black), xf - 23, yf - 7);
             }
         }

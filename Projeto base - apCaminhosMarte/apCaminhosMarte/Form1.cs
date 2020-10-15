@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -136,6 +138,36 @@ namespace apCaminhosMarte
             return distancia;
         }
 
+        // Método que obtém o tempo total gasto em um determinado caminho
+        private int ObterTempo (PilhaLista<Movimento> umCaminho)
+        {
+            No<Movimento> aux = umCaminho.Inicio;
+            int tempo = 0;
+            while (aux != null)
+            {
+                tempo += aux.Info.Lc.Tempo;
+
+                aux = aux.Prox;
+            }
+
+            return tempo;
+        }
+
+        // Método que obtém o custo necessário de um determinado caminho
+        private int ObterCusto (PilhaLista<Movimento> umCaminho)
+        {
+            No<Movimento> aux = umCaminho.Inicio;
+            int custo = 0;
+            while (aux != null)
+            {
+                custo += aux.Info.Lc.Custo;
+
+                aux = aux.Prox;
+            }
+
+            return custo;
+        }
+
         // Método que inicializa um DataGridView com o cabeçalho da coluna nomeado
         private void InicializarColunas (int numeroColunas, DataGridView dgv)
         {
@@ -217,8 +249,8 @@ namespace apCaminhosMarte
         // Evento click do tbControl que desenha a árvore de cidades
         private void tbControl_Click(object sender, EventArgs e)
         {
-            Graphics g = lsbCidades.CreateGraphics();
-            arvoreCidades.DesenharCidades(lsbCidades.Width / 2, 5, g, Math.PI / 2, 1.1, 200);
+            Graphics g = pbArvore.CreateGraphics();
+            arvoreCidades.DesenharCidades(pbArvore.Width / 2, 5, g,  3 * Math.PI/ 2, 1.1, 260);
         }
 
         // Método que desenha no picture box, o caminho selecionado pelo usuário
@@ -239,15 +271,15 @@ namespace apCaminhosMarte
                 GetProporcao(ref x, ref y);
                 GetProporcao(ref xf, ref yf);
 
-                Pen caneta = new Pen(Color.FromArgb(128, 0, 0, 255), 15);
-                caneta.Width = 2;
+                Pen caneta = new Pen(Color.Red);
+                caneta.Width = 3;
 
                 Graphics g = pbMapa.CreateGraphics();
 
                 g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(x - 5), Convert.ToInt32(y - 5), 10, 10);
                 g.DrawLine(caneta, Convert.ToInt32(x), Convert.ToInt32(y), Convert.ToInt32(xf), Convert.ToInt32(yf));
-                g.DrawString(pontoInicial.NomeCidade.Trim(), new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(x - 10), Convert.ToInt32(y - 20));
-                g.DrawString(pontoFinal.NomeCidade.Trim() + " (" + umMovimento.Info.Lc.Distancia.ToString() + ")", new Font("Comic Sans", 10), new SolidBrush(Color.Black), Convert.ToInt32(xf - 10), Convert.ToInt32(yf - 20));
+                g.DrawString(pontoInicial.NomeCidade.Trim(), new Font("Comic Sans", 10, FontStyle.Bold), new SolidBrush(Color.Black), Convert.ToInt32(x - 10), Convert.ToInt32(y - 20));
+                g.DrawString(pontoFinal.NomeCidade.Trim(), new Font("Comic Sans", 10, FontStyle.Bold), new SolidBrush(Color.Black), Convert.ToInt32(xf - 10), Convert.ToInt32(yf - 20));
                 
                 if (umMovimento.Prox == null)
                     g.FillEllipse(new SolidBrush(Color.Black), Convert.ToInt32(xf - 5), Convert.ToInt32(yf - 5), 10, 10);
@@ -285,6 +317,7 @@ namespace apCaminhosMarte
         private void dgvCaminhos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             var umCaminho = ObterUmCaminho(dgvCaminhos.SelectedCells[0].RowIndex);
+            MessageBox.Show("Distância a ser percorrida: " + ObterDistancia(umCaminho) + "\nTempo a ser gasto: " + ObterTempo (umCaminho) + "\nCusto necessário: " + ObterCusto (umCaminho));
             DesenharCaminho(umCaminho);
         }
 

@@ -54,13 +54,14 @@
             this.lsbOrigem = new System.Windows.Forms.ListBox();
             this.pbMapa = new System.Windows.Forms.PictureBox();
             this.tpArvore = new System.Windows.Forms.TabPage();
-            this.lsbCidades = new System.Windows.Forms.ListBox();
+            this.pbArvore = new System.Windows.Forms.PictureBox();
             this.tbControl.SuspendLayout();
             this.tpRotas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMelhorCaminho)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).BeginInit();
             this.tpArvore.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbArvore)).BeginInit();
             this.SuspendLayout();
             // 
             // tbControl
@@ -357,7 +358,7 @@
             // 
             // tpArvore
             // 
-            this.tpArvore.Controls.Add(this.lsbCidades);
+            this.tpArvore.Controls.Add(this.pbArvore);
             this.tpArvore.Location = new System.Drawing.Point(4, 22);
             this.tpArvore.Name = "tpArvore";
             this.tpArvore.Padding = new System.Windows.Forms.Padding(3);
@@ -366,15 +367,13 @@
             this.tpArvore.Text = "Árvore de Cidades";
             this.tpArvore.UseVisualStyleBackColor = true;
             // 
-            // lsbCidades
+            // pbArvore
             // 
-            this.lsbCidades.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lsbCidades.FormattingEnabled = true;
-            this.lsbCidades.ItemHeight = 25;
-            this.lsbCidades.Location = new System.Drawing.Point(6, 6);
-            this.lsbCidades.Name = "lsbCidades";
-            this.lsbCidades.Size = new System.Drawing.Size(1305, 504);
-            this.lsbCidades.TabIndex = 0;
+            this.pbArvore.Location = new System.Drawing.Point(6, 6);
+            this.pbArvore.Name = "pbArvore";
+            this.pbArvore.Size = new System.Drawing.Size(1305, 513);
+            this.pbArvore.TabIndex = 0;
+            this.pbArvore.TabStop = false;
             // 
             // FrmMapa
             // 
@@ -392,6 +391,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMapa)).EndInit();
             this.tpArvore.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbArvore)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -423,7 +423,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.ListBox lsbCidades;
+        private System.Windows.Forms.PictureBox pbArvore;
     }
 }
 

@@ -80,11 +80,6 @@ namespace apCaminhosMarte
             return listaSimples.ExistsInfo(info);
         }
 
-        public bool ExistsLigacao (Dado info, Dado info2)
-        {
-            return listaSimples.ExistsLigacao(info, info2);
-        }
-
         // Construtor de cópia utilizado no método Clone
         public PilhaLista(PilhaLista<Dado> modelo)
         {
