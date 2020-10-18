@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows.Forms;
 
 namespace apCaminhosMarte
 {
@@ -50,62 +51,49 @@ namespace apCaminhosMarte
             }
         }
 
-        // Método de inserção de informações na árvore binária (PRÉ-ORDEM)
+        // Método de inserção de informações na árvore binária
         public void InserirInfo(Dado info)
         {
             if (info == null)
                 throw new Exception("Parametro invalido");
 
+            if (Existe(info))
+                throw new Exception("Informacao repetida");
+
             if (raiz == null)
-            {
                 raiz = new NoArvore<Dado>(info, null, null);
-                atual = raiz;
-                antecessor = raiz;
-                return;
-            }
             else
-            {
-                if (atual.Info.CompareTo(info) > 0)
-                {
-                    antecessor = raiz;
-                    PercorrerParaInserir(info, atual.Esq);
-                }
+                if (info.CompareTo(antecessor.Info) < 0)
+                    antecessor.Esq = new NoArvore<Dado>(info, null, null);
                 else
-                {
-                    antecessor = raiz;
-                    PercorrerParaInserir(info, atual.Dir);
-                }
-            }
+                    antecessor.Dir = new NoArvore<Dado>(info, null, null);
         }
 
-        // Método auxiliar que percorre a árvore (PRÉ-ORDEM) e insere a informação desejada
-        private void PercorrerParaInserir(Dado info, NoArvore<Dado> atual)
+        // Método auxiliar que verifica a existência de uma determinada informação
+        private bool Existe(Dado info)
         {
-            if (atual == null)
+            if (info == null)
+                throw new Exception("Dado invalido");
+
+            NoArvore<Dado> atual = raiz;
+            for (; ; )
             {
-                if (antecessor.Info.CompareTo(info) > 0)
+                if (atual == null)
+                    return false;
+
+                if (info.CompareTo(atual.Info) < 0)
                 {
-                    atual = new NoArvore<Dado>(info, null, null);
-                    antecessor.Esq = atual;
+                    antecessor = atual;
+                    atual = atual.Esq;
                 }
                 else
-                {
-                    atual = new NoArvore<Dado>(info, null, null);
-                    antecessor.Dir = atual;
-                }
-
-                return;
-            }
-
-            if (atual.Info.CompareTo(info) > 0)
-            {
-                antecessor = atual;
-                PercorrerParaInserir(info, atual.Esq);
-            }
-            else
-            {
-                antecessor = atual;
-                PercorrerParaInserir(info, atual.Dir);
+                    if (info.CompareTo(atual.Info) == 0)
+                        return true;
+                    else
+                    {
+                        antecessor = atual;
+                        atual = atual.Dir;
+                    }
             }
         }
 
