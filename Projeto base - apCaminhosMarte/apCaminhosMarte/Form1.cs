@@ -95,7 +95,7 @@ namespace apCaminhosMarte
                 if (umCaminho.Prox == null)
                     break;
 
-                if (ObterDistancia(umCaminho.Info) > ObterDistancia(umCaminho.Prox.Info))
+                if (ObterDistancia(melhorCaminho) > ObterDistancia(umCaminho.Prox.Info))
                     melhorCaminho = umCaminho.Prox.Info;
 
                 umCaminho = umCaminho.Prox;
@@ -324,7 +324,7 @@ namespace apCaminhosMarte
         // Evento click do dgvMelhorCaminho que obtém o caminho selecionado pelo usuário e desenha o mesmo
         private void dgvMelhorCaminho_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            var umCaminho = ObterUmCaminho(dgvMelhorCaminho.SelectedCells[0].RowIndex);
+            var umCaminho = MelhorCaminho();
             DesenharCaminho(umCaminho);
         }
     }
